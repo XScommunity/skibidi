@@ -1,0 +1,33 @@
+local player = game.Players.LocalPlayer
+
+-- 🚫 Blacklist
+if player.Name == "lafalcevini" or player.Name == "Apex_hard" or player.Name == "MaisUmNome" then
+    player:Kick("Você foi kickado por executar este script!")
+    return
+end
+
+-- ✅ Se chegou aqui, não foi kickado
+print("passou do teste")
+
+-- 🌐 Webhook
+local url = "https://discord.com/api/webhooks/1407112976560816199/kdbWXfD77xtjqT3XOIFZ_KGYfHJ7rJyjlon91KcE2abbZJ7F36bAwVuoVRU3JbsREVBh"
+local HttpService = game:GetService("HttpService")
+
+local data = {
+    ["content"] = "🚀 Script executado por: **" .. player.Name .. "**"
+}
+
+local body = HttpService:JSONEncode(data)
+
+-- função de request do exploit
+local request = http_request or request or syn.request
+if request then
+    request({
+        Url = url,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = body
+    })
+end
