@@ -1,4 +1,6 @@
 local player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
 
 -- 🚫 Blacklist
 if player.Name == "lafalcevini" or player.Name == "Apex_hard" or player.Name == "MaisUmNome" then
@@ -9,12 +11,23 @@ end
 -- ✅ Se chegou aqui, não foi kickado
 print("passou do teste")
 
+-- 🔎 Identificar dispositivo
+local device = "Desconhecido"
+if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
+    device = "Mobile 📱"
+elseif UserInputService.KeyboardEnabled and not UserInputService.TouchEnabled then
+    device = "PC 💻"
+elseif UserInputService.GamepadEnabled and not UserInputService.KeyboardEnabled then
+    device = "Console 🎮"
+elseif UserInputService.KeyboardEnabled and UserInputService.TouchEnabled then
+    device = "Tablet/2-em-1 🖐️+⌨️"
+end
+
 -- 🌐 Webhook
 local url = "https://discord.com/api/webhooks/1407112976560816199/kdbWXfD77xtjqT3XOIFZ_KGYfHJ7rJyjlon91KcE2abbZJ7F36bAwVuoVRU3JbsREVBh"
-local HttpService = game:GetService("HttpService")
 
 local data = {
-    ["content"] = "🚀 Script executado por: **" .. player.Name .. "**"
+    ["content"] = "🚀 Script executado por: **" .. player.Name .. "**\n📱 Dispositivo: **" .. device .. "**"
 }
 
 local body = HttpService:JSONEncode(data)
